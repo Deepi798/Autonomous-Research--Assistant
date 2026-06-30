@@ -1,0 +1,152 @@
+/* Global */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f6f8;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: #111827;
+  color: white;
+  padding: 20px 15px;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  border-bottom: 1px solid #374151;
+  padding-bottom: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.history-item {
+  background: #1f2937;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.history-item:hover {
+  background: #374151;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.center-box {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.title {
+  font-size: 30px;
+  color: #111827;
+}
+
+/* Search */
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.search-box input,
+.search-box select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.search-box input {
+  width: 340px;
+}
+
+.search-box button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background: #1d4ed8;
+}
+
+/* Report */
+.report-container {
+  width: 70%;
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.report-container h2,
+.report-container h3 {
+  color: #111827;
+}
+
+.report-text {
+  line-height: 1.8;
+  color: #222;
+}
+
+/* Download */
+.download-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 18px;
+  background: #16a34a;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* Chat */
+.chat-section {
+  margin-top: 40px;
+}
+
+.chat-box {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-box input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.chat-box button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+}
+
+.chat-answer {
+  margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
