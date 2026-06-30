@@ -1,24 +1,92 @@
-from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer
+)
+
 from reportlab.lib.styles import getSampleStyleSheet
 
+import os
+
 def create_pdf(report, sources):
-    file_path = "research.pdf"
 
-    doc = SimpleDocTemplate(file_path)
-    styles = getSampleStyleSheet()
+    try:
 
-    elements = []
+        # Create folder if not exists
+        os.makedirs(
+            "generated_pdfs",
+            exist_ok=True
+        )
 
-    # Add report
-    elements.append(Paragraph(report, styles["Normal"]))
+        # File path
+        filepath = os.path.join(
+            "generated_pdfs",
+            "research_report.pdf"
+        )
 
-    # Add references
-    elements.append(Paragraph("<b>References:</b>", styles["Heading2"]))
+        # Create PDF
+        doc = SimpleDocTemplate(filepath)
 
-    for i, s in enumerate(sources):
-        elements.append(Paragraph(f"{i+1}. {s['title']}", styles["Normal"]))
-        elements.append(Paragraph(s["url"], styles["Normal"]))
+        styles = getSampleStyleSheet()
 
-    doc.build(elements)
+        elements = []
 
-    return file_path
+        # Title
+        elements.append(
+            Paragraph(
+                "Autonomous Research Report",
+                styles["Title"]
+            )
+        )
+
+        elements.append(
+            Spacer(1, 20)
+        )
+
+        # Report content
+        report_text = report.replace(
+            "\n",
+            "<br/>"
+        )
+
+        elements.append(
+            Paragraph(
+                report_text,
+                styles["BodyText"]
+            )
+        )
+
+        elements.append(
+            Spacer(1, 20)
+        )
+
+        # Sources heading
+        elements.append(
+            Paragraph(
+                "Sources",
+                styles["Heading2"]
+            )
+        )
+
+        # Source links
+        for s in sources:
+
+            elements.append(
+                Paragraph(
+                    s["url"],
+                    styles["BodyText"]
+                )
+            )
+
+        # Build PDF
+        doc.build(elements)
+
+        print("PDF Created Successfully")
+
+        return filepath
+
+    except Exception as e:
+
+        print("PDF Error:", e)
+
+        return ""

@@ -1,8 +1,32 @@
+# Node modules
 node_modules/
+
+# Environment variables
 .env
+
+# Python cache
 __pycache__/
 *.pyc
+
+# Virtual environments
 venv/
 .venv/
-dist/
+
+# React build
 build/
+dist/
+
+# Generated PDFs
+backend/generated_pdfs/
+generated_pdfs/
+
+# Generated PDF files
+backend/research.pdf
+research.pdf
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

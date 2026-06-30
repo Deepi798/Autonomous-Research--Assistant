@@ -2,37 +2,114 @@ from groq import Groq
 import os
 from dotenv import load_dotenv
 
+# Load environment variables
 load_dotenv()
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# Groq Client
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
+)
 
+# Generate AI Research Report
 def generate_report(topic, sources):
+
     try:
+
+        # Combine all source content
         content = ""
 
         for s in sources:
-            content += s["content"] + "\n\n"
 
-        prompt = f"""
-        Generate a detailed research report on: {topic}
+            content += (
+                s.get("content", "")
+                + "\n\n"
+            )
 
-        Include:
-        - Introduction
-        - Advantages
-        - Challenges
-        - Conclusion
+        # Compare Topics Mode
+        if "vs" in topic.lower():
 
-        Use the following content:
-        {content}
-        """
+            prompt = f"""
+            Compare the following topics:
 
+            {topic}
+
+            Create a professional comparison report.
+
+            Include:
+
+            ## Quick Overview
+            ## Similarities
+            ## Differences
+            ## Advantages
+            ## Challenges
+            ## Future Scope
+            ## Conclusion
+
+            Use simple and clear language.
+            """
+
+        # Normal Research Mode
+        else:
+
+            prompt = f"""
+            Generate a professional research report on:
+
+            {topic}
+
+            The report should contain:
+
+            ## Quick Overview
+            Give a short and simple explanation.
+
+            ## Detailed Analysis
+            Explain advantages, applications, and challenges.
+
+            ## Advanced Insights
+            Discuss technical details and future scope.
+
+            ## Conclusion
+
+            Use this research content:
+
+            {content[:4000]}
+            """
+
+        # Generate response
         response = client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
-    messages=[{"role": "user", "content": prompt}]
-)
 
-        return response.choices[0].message.content
+            model="llama-3.1-8b-instant",
+
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+
+            temperature=0.5,
+            max_tokens=1200
+        )
+
+        # Extract AI response
+        answer = (
+            response
+            .choices[0]
+            .message.content
+        )
+
+        return answer
 
     except Exception as e:
-        print("ERROR:", e)
-        return "Error generating report"
+
+        print("Groq Error:", e)
+
+        return """
+        ## Error
+
+        Failed to generate report.
+
+        Please check:
+        - GROQ API KEY
+        - Internet connection
+        - API limits
+        """
